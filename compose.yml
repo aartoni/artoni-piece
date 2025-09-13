@@ -7,11 +7,14 @@ services:
     depends_on:
       - db
     environment:
+      - DB_PASSWORD_FILE=${POSTGRES_PASSWORD_FILE}
       - ORIGIN
       - PORT=${BACKEND_PORT}
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     restart: "unless-stopped"
+    secrets:
+      - db_password
   db:
     container_name: db
     image: postgres:17-alpine
@@ -25,6 +28,7 @@ services:
       - db_password
     shm_size: 128mb
     volumes:
+      - ./config/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - ./data/postgres:/var/lib/postgresql/data
   frontend:
     build:
