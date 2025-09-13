@@ -1,12 +1,43 @@
-import type { Property } from "~/routes/home";
+import { useMemo } from "react";
+import { PropertyStatus, type Property } from "~/routes/home";
+import BuyBox from "./buybox";
 
 interface PropertyModalProps {
-  property: Property | null;
+  property: Property;
   onClose: () => void;
+  onPurchased: (id: string, purchased: number) => void;
 }
 
-export default function PropertyModal({ property, onClose }: PropertyModalProps) {
-  if (!property) return null;
+export default function PropertyModal({
+  property,
+  onClose,
+  onPurchased,
+}: PropertyModalProps) {
+  const available = useMemo(
+    () => property.totalPieces - property.soldPieces,
+    [property.totalPieces, property.soldPieces]
+  );
+
+  const canBuy = property.status === PropertyStatus.AVAILABLE && available > 0;
+
+  async function handleBuy(qty: number) {
+    const res = await fetch(`http://localhost:3000/orders/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ property: property.id, pieces: qty }),
+    });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      throw new Error(text || `Purchase failed: ${res.status}`);
+    }
+
+    onPurchased(property.id, qty);
+    onClose();
+  }
 
   return (
     <div
@@ -33,21 +64,32 @@ export default function PropertyModal({ property, onClose }: PropertyModalProps)
         <h2 className="text-xl font-semibold mb-2">
           {property.address || "Untitled property"}
         </h2>
-        <p className="text-gray-700 mb-1">
-          <span className="font-semibold">City:</span> {property.city}
-        </p>
-        <p className="text-gray-700 mb-1">
-          <span className="font-semibold">Price per unit:</span>{" "}
-          {property.unitPrice}
-        </p>
-        <p className="text-gray-700 mb-1">
-          <span className="font-semibold">Pieces sold:</span>{" "}
-          {property.soldPieces}/{property.totalPieces}
-        </p>
-        <p className="text-gray-700">
-          <span className="font-semibold">Status:</span>{" "}
-          {property.status.replace("_", " ")}
-        </p>
+        <div className="grid grid-cols-2 gap-3 text-sm text-gray-700 mb-4">
+          <div>
+            <span className="font-semibold">City:</span> {property.city}
+          </div>
+          <div>
+            <span className="font-semibold">Price / piece:</span>{" "}
+            {property.unitPrice}
+          </div>
+          <div>
+            <span className="font-semibold">Pieces sold:</span>{" "}
+            {property.soldPieces}/{property.totalPieces}
+          </div>
+          <div>
+            <span className="font-semibold">Available:</span> {available}
+          </div>
+          <div className="col-span-2">
+            <span className="font-semibold">Status:</span>{" "}
+            {property.status.replace("_", " ")}
+          </div>
+        </div>
+        <BuyBox
+          available={available}
+          unitPrice={property.unitPrice}
+          canBuy={canBuy}
+          onBuy={handleBuy}
+        />
       </div>
     </div>
   );

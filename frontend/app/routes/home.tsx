@@ -50,6 +50,14 @@ export default function Home() {
     load();
   }, []);
 
+  function handlePurchased(id: string, piecesBought: number) {
+    setProperties((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, soldPieces: p.soldPieces + piecesBought } : p
+      )
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 p-6">
       <div className="max-w-3xl mx-auto">
@@ -107,7 +115,13 @@ export default function Home() {
           ))}
         </ul>
       </div>
-      <PropertyModal property={selected} onClose={() => setSelected(null)} />
+      {selected && (
+        <PropertyModal
+          property={selected}
+          onClose={() => setSelected(null)}
+          onPurchased={handlePurchased}
+        />
+      )}
     </div>
   );
 }
