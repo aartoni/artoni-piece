@@ -22,13 +22,10 @@ export const dataSourceOptions: DataSourceOptions = {
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/db/migrations/*.js'],
   migrationsTableName: 'migrations',
-  migrationsRun: false,
+  migrationsRun: true,
   extra: {
     connectionLimit: 10,
   },
-  // I've enabled synchronized for you here
-  // I wouldn't do it in a production env though :P
-  synchronize: true,
 };
 
 const dataSource = new DataSource(dataSourceOptions);

@@ -1,7 +1,9 @@
+import { Property } from 'src/properties/property.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -11,11 +13,11 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  // TODO Add relation
-  property: string;
+  @ManyToOne(() => Property, { eager: true, onDelete: 'CASCADE' })
+  property: Property;
 
   @Column({ type: 'int', nullable: false })
-  boughtPieces: string;
+  boughtPieces: number;
 
   @CreateDateColumn()
   createdAt: Date;
