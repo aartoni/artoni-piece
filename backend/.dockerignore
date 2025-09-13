@@ -1,0 +1,6 @@
+.dockerignore
+.prettierrc
+dist
+Dockerfile
+eslintrc.config.mjs
+node_modules
