@@ -12,7 +12,7 @@ export class OrderService {
 
   async create(propertyId: string, pieces: number) {
     const property = await this.propertyService.buyPieces(propertyId, pieces);
-    return this.ordersRepository.create({
+    return this.ordersRepository.save({
       boughtPieces: pieces,
       property,
     });
