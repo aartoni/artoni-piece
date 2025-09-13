@@ -22,6 +22,7 @@ interface Property {
   soldPieces: number;
   unitPrice: number;
   status: PropertyStatus;
+  imageUrl?: string;
 }
 
 export default function Home() {
@@ -73,6 +74,18 @@ export default function Home() {
               className="rounded-xl border border-gray-200 bg-white p-4"
             >
               <div className="flex gap-4">
+                {p.imageUrl ? (
+                  <img
+                    src={p.imageUrl}
+                    alt={p.address || "Property"}
+                    className="h-20 w-28 rounded-lg object-cover flex-shrink-0"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="h-20 w-28 rounded-lg bg-gray-100 flex items-center justify-center text-xs text-gray-400 flex-shrink-0">
+                    No image
+                  </div>
+                )}
                 <div className="flex-1">
                   <h2 className="text-lg font-medium">
                     {p.address || "Untitled property"}
