@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PropertyModule } from './orders/property.module';
+import { PropertyModule } from './properties/property.module';
 import { ConfigModule } from '@nestjs/config';
 import { dataSourceOptions } from '../db/datasource';
 

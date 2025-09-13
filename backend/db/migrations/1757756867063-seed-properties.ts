@@ -1,4 +1,4 @@
-import { PropertyStatus } from 'src/orders/property.entity';
+import { PropertyStatus } from 'src/properties/property.entity';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class SeedProperties1757756867063 implements MigrationInterface {
