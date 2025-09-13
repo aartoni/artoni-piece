@@ -1,17 +1,15 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { config } from 'dotenv';
 import { ConfigService } from '@nestjs/config';
-
-config();
+import { readFileSync } from 'node:fs';
 
 const configService = new ConfigService();
 
 function readVarFromFile(varName: string) {
-  const filePath = process.env[varName];
+  const filePath = configService.getOrThrow<string>(varName);
   if (!filePath) {
     throw new Error(`${varName} env var is not set`);
   }
-  return configService.getOrThrow<string>('DB_PASSWORD');
+  return readFileSync(filePath, 'utf8').trim();
 }
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -29,6 +27,8 @@ export const dataSourceOptions: DataSourceOptions = {
     connectionLimit: 10,
   },
 };
+
+console.log('Password:', readVarFromFile('DB_PASSWORD_FILE'));
 
 const dataSource = new DataSource(dataSourceOptions);
 
