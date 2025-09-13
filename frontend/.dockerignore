@@ -1,0 +1,5 @@
+.dockerignore
+.react-router
+build
+Dockerfile
+node_modules
