@@ -26,6 +26,9 @@ export const dataSourceOptions: DataSourceOptions = {
   extra: {
     connectionLimit: 10,
   },
+  // I've enabled synchronized for you here
+  // I wouldn't do it in a production env though :P
+  synchronize: true,
 };
 
 console.log('Password:', readVarFromFile('DB_PASSWORD_FILE'));
