@@ -10,6 +10,11 @@ export class PropertyController {
     return this.propertyService.findAll();
   }
 
+  @Get('public')
+  async findPublic() {
+    return this.propertyService.findPublic();
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.propertyService.findOne(id);

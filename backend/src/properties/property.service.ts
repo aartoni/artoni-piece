@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Property } from './property.entity';
-import { Repository } from 'typeorm';
+import { Property, PropertyStatus } from './property.entity';
+import { Not, Repository } from 'typeorm';
 
 export class PropertyService {
   constructor(
@@ -10,6 +10,12 @@ export class PropertyService {
 
   findAll() {
     return this.propertyRepository.find();
+  }
+
+  findPublic() {
+    return this.propertyRepository.findBy({
+      status: Not(PropertyStatus.HIDDEN),
+    });
   }
 
   findOne(id: string) {

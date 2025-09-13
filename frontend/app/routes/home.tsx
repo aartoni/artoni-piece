@@ -35,7 +35,7 @@ export default function Home() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("http://localhost:3000/properties", {
+        const res = await fetch("http://localhost:3000/properties/public", {
           headers: { Accept: "application/json" },
         });
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
