@@ -31,8 +31,6 @@ export const dataSourceOptions: DataSourceOptions = {
   synchronize: true,
 };
 
-console.log('Password:', readVarFromFile('DB_PASSWORD_FILE'));
-
 const dataSource = new DataSource(dataSourceOptions);
 
 export default dataSource;
