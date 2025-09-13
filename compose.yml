@@ -1,0 +1,44 @@
+services:
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    container_name: backend
+    depends_on:
+      - db
+    environment:
+      - ORIGIN
+      - PORT=${BACKEND_PORT}
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    restart: "unless-stopped"
+  db:
+    container_name: db
+    image: postgres:17-alpine
+    environment:
+      - POSTGRES_PASSWORD_FILE
+      - TZ
+    expose:
+      - 5432
+    restart: unless-stopped
+    secrets:
+      - db_password
+    shm_size: 128mb
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    depends_on:
+      - backend
+    environment:
+      - PORT=${FRONTEND_PORT}
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    restart: "unless-stopped"
+
+secrets:
+  db_password:
+    file: ./config/db-password.txt
