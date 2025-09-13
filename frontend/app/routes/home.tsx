@@ -1,3 +1,4 @@
+import PropertyModal from "~/components/modal";
 import type { Route } from "./+types/home";
 import { useEffect, useState } from "react";
 
@@ -14,7 +15,7 @@ export enum PropertyStatus {
   HIDDEN = "hidden",
 }
 
-interface Property {
+export interface Property {
   id: string;
   city: string;
   address: string;
@@ -29,6 +30,7 @@ export default function Home() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selected, setSelected] = useState<Property | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -71,7 +73,8 @@ export default function Home() {
           {properties.map((p) => (
             <li
               key={p.id}
-              className="rounded-xl border border-gray-200 bg-white p-4"
+              onClick={() => setSelected(p)}
+              className="rounded-xl border border-gray-200 bg-white p-4 cursor-pointer hover:shadow-md transition"
             >
               <div className="flex gap-4">
                 {p.imageUrl ? (
@@ -104,6 +107,7 @@ export default function Home() {
           ))}
         </ul>
       </div>
+      <PropertyModal property={selected} onClose={() => setSelected(null)} />
     </div>
   );
 }
