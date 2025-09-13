@@ -1,0 +1,8 @@
+# General
+build
+data
+dist
+node_modules
+
+# Frontend
+.react-router
