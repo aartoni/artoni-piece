@@ -41,7 +41,7 @@ export class Property {
     default: PropertyStatus.HIDDEN,
     nullable: false,
   })
-  status: string;
+  status: PropertyStatus;
 
   @CreateDateColumn()
   createdAt: Date;
