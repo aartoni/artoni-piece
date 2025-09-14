@@ -14,15 +14,15 @@ docker compose up -d
 
 <p align="center">
   <figure>
-    <img src="docs/screenshots/home.png" width="800">
+    <img src="docs/screenshots/home.png" width="400">
     <figcaption><em>Figure 1:</em> Home screen</figcaption>
   </figure>
   <figure>
-    <img src="docs/screenshots/modal.png" width="800">
+    <img src="docs/screenshots/modal.png" width="400">
     <figcaption><em>Figure 2:</em> Details modal</figcaption>
   </figure>
   <figure>
-    <img src="docs/screenshots/unavailable.png" width="800">
+    <img src="docs/screenshots/unavailable.png" width="400">
     <figcaption><em>Figure 3:</em> Unavailable property with disabled buttons</figcaption>
   </figure>
 </p>
