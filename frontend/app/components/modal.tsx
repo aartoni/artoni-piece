@@ -54,9 +54,9 @@ export default function PropertyModal({
         >
           ✕
         </button>
-        {property.imageUrl && (
+        {property.image && (
           <img
-            src={property.imageUrl}
+            src={property.image}
             alt={property.address}
             className="w-full h-48 object-cover rounded-lg mb-4"
           />

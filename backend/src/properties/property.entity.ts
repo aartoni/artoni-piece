@@ -34,6 +34,9 @@ export class Property {
   @Column({ type: 'decimal', precision: 12, scale: 2, nullable: false })
   unitPrice: number;
 
+  @Column({ nullable: true, length: 40 })
+  image?: string;
+
   @Index()
   @Column({
     type: 'enum',

@@ -23,7 +23,7 @@ export interface Property {
   soldPieces: number;
   unitPrice: number;
   status: PropertyStatus;
-  imageUrl?: string;
+  image?: string;
 }
 
 export default function Home() {
@@ -85,9 +85,9 @@ export default function Home() {
               className="rounded-xl border border-gray-200 bg-white p-4 cursor-pointer hover:shadow-md transition"
             >
               <div className="flex gap-4">
-                {p.imageUrl ? (
+                {p.image ? (
                   <img
-                    src={p.imageUrl}
+                    src={p.image}
                     alt={p.address || "Property"}
                     className="h-20 w-28 rounded-lg object-cover flex-shrink-0"
                     loading="lazy"
